@@ -17,6 +17,7 @@ import hmac
 
 from contextlib import contextmanager
 from datetime import datetime, timedelta
+from speaklater import is_lazy_string
 
 from flask import url_for, flash, current_app, request, session, render_template
 from flask.ext.login import login_user as _login_user, \
@@ -190,7 +191,10 @@ def get_config(app):
 
 def get_message(key, **kwargs):
     rv = config_value('MSG_' + key)
-    return rv[0] % kwargs, rv[1]
+    if is_lazy_string(rv[0]):
+        return unicode(rv[0]) % kwargs, rv[1]
+    else:
+        return rv[0] % kwargs, rv[1]
 
 
 def config_value(key, app=None, default=None):
