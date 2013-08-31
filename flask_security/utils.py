@@ -21,7 +21,7 @@ from datetime import datetime, timedelta
 try:
     from speaklater import is_lazy_string
 except ImportError:
-    is_lazy_string = None
+    is_lazy_string = False
 
 from flask import url_for, flash, current_app, request, session, render_template
 from flask.ext.login import login_user as _login_user, \
@@ -196,7 +196,7 @@ def get_config(app):
 def get_message(key, **kwargs):
     rv = config_value('MSG_' + key)
     
-    if iz_lazy_string:
+    if is_lazy_string:
         if is_lazy_string(rv[0]):
             return unicode(rv[0]) % kwargs, rv[1]
         
