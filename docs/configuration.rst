@@ -18,7 +18,7 @@ Core
 ``SECURITY_FLASH_MESSAGES``              Specifies wether or not to flash
                                          messages during security procedures.
                                          Defaults to ``True``.
-``SECURITY_PASSWORD_HASH``               Specifies the password hash algorith to
+``SECURITY_PASSWORD_HASH``               Specifies the password hash algorithm to
                                          use when encrypting and decrypting
                                          passwords. Recommended values for
                                          production systems are ``bcrypt``,
@@ -206,6 +206,8 @@ Miscellaneous
 
 ======================================= ========================================
 ``SECURITY_SEND_REGISTER_EMAIL``        Specifies whether registration email is
+                                        sent. Defaults to ``True``.
+``SECURITY_SEND_PASSWORD_CHANGE_EMAIL`` Specifies whether password change email is
                                         sent. Defaults to ``True``.
 ``SECURITY_CONFIRM_EMAIL_WITHIN``       Specifies the amount of time a user has
                                         before their confirmation link expires.
