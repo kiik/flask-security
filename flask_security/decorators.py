@@ -196,6 +196,33 @@ def roles_accepted(*roles):
         return decorated_view
     return wrapper
 
+def roles_disallowed(*roles):
+    """Decorator which specifies that a user mustn't have any one of the
+    specified roles. Example::
+
+        @app.route('/create_post')
+        @roles_disallowed('viewer', 'anonymous')
+        def create_post():
+            return 'Create Post'
+
+    The current cant have the `viewer` role and `anonymous` role in
+    order to view the page.
+
+    :param args: The forbidden roles.
+    """
+    def wrapper(fn):
+        @wraps(fn)
+        def decorated_view(*args, **kwargs):
+            c_roles = current_user.roles #TODO: check if a query is made each time current_user.roles is used
+            for role in roles:
+                if role in c_roles:
+                    if role in _security.unauthorized_role_callbacks:
+                        return _security.unauthorized_role_callbacks[role]()
+                    else:
+                        return _get_unauthorized_view()
+            return fn(*args, **kwargs)
+        return decorated_view
+    return wrapper
 
 def anonymous_user_required(f):
     @wraps(f)

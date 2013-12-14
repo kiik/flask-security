@@ -351,7 +351,8 @@ class Security(object):
                  login_form=None, confirm_register_form=None,
                  register_form=None, forgot_password_form=None,
                  reset_password_form=None, change_password_form=None,
-                 send_confirmation_form=None, passwordless_login_form=None):
+                 send_confirmation_form=None, passwordless_login_form=None,
+                 unauthorized_role_callbacks={}):
         """Initializes the Flask-Security extension for the specified
         application and datastore implentation.
 
@@ -377,7 +378,7 @@ class Security(object):
                            reset_password_form=reset_password_form,
                            change_password_form=change_password_form,
                            send_confirmation_form=send_confirmation_form,
-                           passwordless_login_form=passwordless_login_form)
+                           passwordless_login_form=passwordless_login_form, unauthorized_role_callbacks=unauthorized_role_callbacks)
 
         if register_blueprint:
             app.register_blueprint(create_blueprint(state, __name__))
