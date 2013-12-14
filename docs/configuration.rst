@@ -18,7 +18,7 @@ Core
 ``SECURITY_FLASH_MESSAGES``              Specifies wether or not to flash
                                          messages during security procedures.
                                          Defaults to ``True``.
-``SECURITY_PASSWORD_HASH``               Specifies the password hash algorith to
+``SECURITY_PASSWORD_HASH``               Specifies the password hash algorithm to
                                          use when encrypting and decrypting
                                          passwords. Recommended values for
                                          production systems are ``bcrypt``,
@@ -122,6 +122,9 @@ Template Paths
 ``SECURITY_RESET_PASSWORD_TEMPLATE``     Specifies the path to the template for
                                          the reset password page. Defaults to
                                          ``security/reset_password.html``.
+``SECURITY_CHANGE_PASSWORD_TEMPLATE``    Specifies the path to the template for
+                                         the change password page. Defaults to
+                                         ``security/change_password.html``.
 ``SECURITY_SEND_CONFIRMATION_TEMPLATE``  Specifies the path to the template for
                                          the resend confirmation instructions
                                          page. Defaults to
@@ -206,6 +209,8 @@ Miscellaneous
 
 ======================================= ========================================
 ``SECURITY_SEND_REGISTER_EMAIL``        Specifies whether registration email is
+                                        sent. Defaults to ``True``.
+``SECURITY_SEND_PASSWORD_CHANGE_EMAIL`` Specifies whether password change email is
                                         sent. Defaults to ``True``.
 ``SECURITY_CONFIRM_EMAIL_WITHIN``       Specifies the amount of time a user has
                                         before their confirmation link expires.

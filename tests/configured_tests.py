@@ -77,7 +77,7 @@ class ConfiguredSecurityTests(SecurityTest):
         self.assertIn('Page 1', r.data)
 
     def test_register_json(self):
-        data = '{ "email": "dude@lp.com", "password": "password", "csrf_token":"%s" }' % self.csrf_token
+        data = '{ "email": "dude@lp.com", "password": "password"}'
         r = self._post('/register', data=data, content_type='application/json')
         data = json.loads(r.data)
         self.assertEquals(data['meta']['code'], 200)
@@ -493,6 +493,29 @@ class ChangePasswordTest(SecurityTest):
         self.assertIn("/reset", outbox[0].html)
 
 
+class EmailConfigTest(SecurityTest):
+
+    AUTH_CONFIG = {
+        'SECURITY_SEND_REGISTER_EMAIL': False,
+        'SECURITY_SEND_PASSWORD_CHANGE_EMAIL': False,
+    }
+
+    def test_change_password_success_email_option(self):
+        """Test the change password email can be turned off w/ configuration."""
+
+        data = {
+            'password': 'password',
+            'new_password': 'newpassword',
+            'new_password_confirm': 'newpassword'
+        }
+
+        self.authenticate()
+        with self.app.extensions['mail'].record_messages() as outbox:
+            r = self._post('/change', data=data, follow_redirects=True)
+
+        self.assertEqual(len(outbox), 0)
+
+
 class ChangePasswordPostViewTest(SecurityTest):
 
     AUTH_CONFIG = {
@@ -559,7 +582,7 @@ class PasswordlessTests(SecurityTest):
         self.assertIn(msg, r.data)
 
     def test_request_login_token_with_json_and_valid_email(self):
-        data = '{"email": "matt@lp.com", "password": "password", "csrf_token":"%s"}' % self.csrf_token
+        data = '{"email": "matt@lp.com", "password": "password"}'
         r = self._post('/login', data=data, content_type='application/json')
         self.assertEquals(r.status_code, 200)
         self.assertNotIn('error', r.data)
