@@ -316,6 +316,12 @@ def create_blueprint(state, import_name):
                    subdomain=state.subdomain,
                    template_folder='templates')
 
+    
+    return append_to_blueprint(bp, state)
+
+def append_to_blueprint(bp, state):
+    """Adds the security extension views to a blueprint"""
+
     bp.route(state.logout_url, endpoint='logout')(logout)
 
     if state.passwordless:
